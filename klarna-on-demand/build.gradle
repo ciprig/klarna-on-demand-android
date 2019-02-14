@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 28
         versionCode 20404
         versionName "2.4.4"
     }
@@ -17,36 +16,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    sourceSets {
-        androidTest.setRoot('src/test')
-    }
 }
-
-apply plugin: 'android-unit-test'
 
 dependencies {
-    testCompile('junit:junit:4.12')
-    testCompile 'org.robolectric:robolectric:2.4'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.code.gson:gson:2.8.5'
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.google.code.gson:gson:2.2.4'
+    testImplementation('junit:junit:4.12')
+    testImplementation 'org.robolectric:robolectric:2.4'
 
-    testCompile 'org.powermock:powermock-api-mockito:1.6.0'
-    testCompile 'org.powermock:powermock-module-junit4:1.6.0'
-    testCompile 'org.powermock:powermock-module-junit4-rule:1.6.0'
-    testCompile 'org.powermock:powermock-classloading-xstream:1.6.0'
-    testCompile 'org.hamcrest:hamcrest-all:1.3'
-    testCompile 'org.assertj:assertj-core:1.7.1'
+    testImplementation 'org.powermock:powermock-api-mockito:1.6.0'
+    testImplementation 'org.powermock:powermock-module-junit4:1.6.0'
+    testImplementation 'org.powermock:powermock-module-junit4-rule:1.6.0'
+    testImplementation 'org.powermock:powermock-classloading-xstream:1.6.0'
+    testImplementation 'org.hamcrest:hamcrest-all:1.3'
+    testImplementation 'org.assertj:assertj-core:1.7.1'
 }
 
-task copyTestResources(type: Copy) {
-    from "build/intermediates/res/test"
-    into "build/intermediates/res"
-}
-
-afterEvaluate {
-    tasks.findByPath('testDebugClasses').dependsOn copyTestResources
-}
+//task copyTestResources(type: Copy) {
+//    from "build/intermediates/res/test"
+//    into "build/intermediates/res"
+//}
+//
+//afterEvaluate {
+//    tasks.findByPath('testDebugClasses').dependsOn copyTestResources
+//}
 
 apply from: 'deploy.gradle'

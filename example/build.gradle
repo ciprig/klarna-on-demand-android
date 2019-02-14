@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.klarna.example"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -18,9 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
-    compile project(':klarna-on-demand')
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':klarna-on-demand')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
