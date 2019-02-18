@@ -28,6 +28,7 @@ abstract class WebViewActivity extends Activity {
     private static final String USER_READY_EVENT_IDENTIFIER = "userReady";
     private static final String USER_ERROR_EVENT_IDENTIFIER = "userError";
     private static final String OPEN_IN_BROWSER_PARAMETER = "openInBrowser=true";
+    private static final String BANKID_INTENT = "scheme=bankid";
     public static final int RESULT_ERROR = 1;
 
     @Override
@@ -94,6 +95,15 @@ abstract class WebViewActivity extends Activity {
                     String parameterlessUrl = url.substring(0,url.lastIndexOf("?"));
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(parameterlessUrl));
                     startActivity(browserIntent);
+
+                    return true;
+                }
+                else if(url.contains(BANKID_INTENT)) {
+                    Intent intent = new Intent();
+                    intent.setPackage("com.bankid.bus");
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("bankid://www.bankid.com?redirect=null")) ;
+                    startActivityForResult(intent, 0);
 
                     return true;
                 }
