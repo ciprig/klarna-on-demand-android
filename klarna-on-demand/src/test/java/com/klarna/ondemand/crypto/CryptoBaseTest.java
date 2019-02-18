@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import org.robolectric.Robolectric;
 
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
@@ -17,6 +16,8 @@ import java.security.PrivateKey;
 import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
+import org.robolectric.RuntimeEnvironment;
+import org.robolectric.util.ReflectionHelpers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,9 +32,9 @@ public abstract class CryptoBaseTest {
 
     @Before
     public void beforeEach() throws Exception {
-        Robolectric.Reflection.setFinalStaticField(Build.VERSION.class,
-                "SDK_INT", getTestSdkVersion());
-        android.content.Context context = Robolectric.application.getApplicationContext();
+        ReflectionHelpers.setStaticField(Build.VERSION.class, "SDK_INT", getTestSdkVersion());
+
+        android.content.Context context = RuntimeEnvironment.application.getApplicationContext();
         crypto = getTestSubject(context);
     }
 
