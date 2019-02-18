@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
@@ -17,9 +18,9 @@ import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
 import org.robolectric.fakes.RoboMenuItem;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -55,11 +56,10 @@ public class RegistrationActivityTest {
             put("userToken", "my_token");
         }});
 
-        Intent expectedIntent = new Intent();
+        ArgumentCaptor<Intent> intentCaptor = ArgumentCaptor.forClass(Intent.class);
+        verify(registrationActivity).setResult(eq(Activity.RESULT_OK), intentCaptor.capture());
 
-        expectedIntent.putExtra(RegistrationActivity.EXTRA_USER_TOKEN, "my_token");
-
-        verify(registrationActivity).setResult(eq(Activity.RESULT_OK), isA(Intent.class));
+        assertThat(intentCaptor.getValue().getStringExtra(RegistrationActivity.EXTRA_USER_TOKEN)).isEqualTo("my_token");
         verify(registrationActivity).finish();
     }
 
