@@ -1,10 +1,8 @@
 package com.klarna.ondemand;
 
-import android.content.res.Resources;
-
 import com.klarna.ondemand.crypto.Crypto;
 import com.klarna.ondemand.crypto.CryptoFactory;
-
+import java.util.Locale;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,11 +10,9 @@ import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-
-import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -24,7 +20,7 @@ import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 18)
+@Config(sdk = 18)
 @PrepareForTest({Context.class, Locale.class, CryptoFactory.class})
 @PowerMockIgnore({ "org.mockito.*", "org.robolectric.*", "android.*" })
 public class UrlHelperTest {
@@ -38,7 +34,7 @@ public class UrlHelperTest {
     public final PowerMockRule rule = new PowerMockRule();
     @Before
     public void beforeEach() {
-        context = Robolectric.application.getApplicationContext();
+        context = RuntimeEnvironment.application.getApplicationContext();
 
         mockStatic(Context.class);
         when(Context.getApiKey()).thenReturn("test_skadoo");

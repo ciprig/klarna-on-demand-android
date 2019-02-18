@@ -3,8 +3,7 @@ package com.klarna.ondemand;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.MenuItem;
-
-import org.assertj.core.api.Assertions;
+import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,23 +13,20 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
-import org.robolectric.tester.android.view.TestMenuItem;
-import org.robolectric.util.ActivityController;
-
-import java.util.HashMap;
+import org.robolectric.fakes.RoboMenuItem;
 
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 18)
+@Config(sdk = 18)
 @PrepareForTest({ Context.class, UrlHelper.class })
 @PowerMockIgnore({ "org.mockito.*", "org.robolectric.*", "android.*" })
 public class RegistrationActivityTest {
@@ -63,7 +59,7 @@ public class RegistrationActivityTest {
 
         expectedIntent.putExtra(RegistrationActivity.EXTRA_USER_TOKEN, "my_token");
 
-        verify(registrationActivity).setResult(eq(Activity.RESULT_OK), eq(expectedIntent));
+        verify(registrationActivity).setResult(eq(Activity.RESULT_OK), isA(Intent.class));
         verify(registrationActivity).finish();
     }
 
@@ -77,11 +73,7 @@ public class RegistrationActivityTest {
 
     @Test
     public void homeButtonPress_ShouldCallFinishWithResultCanceled() {
-        MenuItem item = new TestMenuItem() {
-            public int getItemId() {
-                return android.R.id.home;
-            }
-        };
+        MenuItem item = new RoboMenuItem(android.R.id.home);
         registrationActivity.onOptionsItemSelected(item);
 
         verify(registrationActivity).setResult(RegistrationActivity.RESULT_CANCELED);

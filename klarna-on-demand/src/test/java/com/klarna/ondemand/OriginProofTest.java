@@ -16,8 +16,8 @@ import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.security.InvalidKeyException;
@@ -33,7 +33,7 @@ import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 18)
+@Config(sdk = 18)
 @PrepareForTest({CryptoFactory.class, CryptoBase.class})
 @PowerMockIgnore({ "org.mockito.*", "org.robolectric.*", "android.*", "org.json.*" })
 public class OriginProofTest {
@@ -48,7 +48,7 @@ public class OriginProofTest {
 
     @Before
     public void init() throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-        context = Robolectric.application.getApplicationContext();
+        context = RuntimeEnvironment.application.getApplicationContext();
     }
 
     //endregion
