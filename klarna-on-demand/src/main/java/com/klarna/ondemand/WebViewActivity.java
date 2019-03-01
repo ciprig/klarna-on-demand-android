@@ -87,6 +87,8 @@ abstract class WebViewActivity extends Activity {
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.clearCache(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setDatabaseEnabled(true);
         webView.setWebViewClient(webViewClient = new WebViewClient() {
 
             @Override
