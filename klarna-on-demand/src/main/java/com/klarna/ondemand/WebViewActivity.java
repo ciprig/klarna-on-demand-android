@@ -29,6 +29,7 @@ abstract class WebViewActivity extends Activity {
     private static final String USER_ERROR_EVENT_IDENTIFIER = "userError";
     private static final String OPEN_IN_BROWSER_PARAMETER = "openInBrowser=true";
     private static final String BANKID_INTENT = "scheme=bankid";
+    private static final String BANKID_REDIRECT = "bankid:///";
     public static final int RESULT_ERROR = 1;
 
     @Override
@@ -100,7 +101,7 @@ abstract class WebViewActivity extends Activity {
 
                     return true;
                 }
-                else if(url.contains(BANKID_INTENT)) {
+                else if(url.contains(BANKID_INTENT) || url.contains(BANKID_REDIRECT)) {
                     Intent intent = new Intent();
                     intent.setPackage("com.bankid.bus");
                     intent.setAction(Intent.ACTION_VIEW);
